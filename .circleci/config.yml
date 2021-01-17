@@ -8,6 +8,13 @@ commands:
       - run: aws configure set aws_access_key_if $AWS_ACCESS_KEY_ID
       - run: aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
   
+  workspace-using-preparation:
+    description: Install tar and gzip package to use workspace.
+    steps:
+      - run: |
+          yum update
+          yum install -y tar gzip
+  
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -154,6 +161,8 @@ jobs:
       - checkout
       # Configure AWS account
       - aws-configure
+      # Install tar, gzip packages to use workspace.
+      - workspace-using-preparation
       - run:
           name: Ensure back-end infrastructure exists
           command: |
