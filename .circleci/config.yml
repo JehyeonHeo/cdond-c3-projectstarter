@@ -236,18 +236,25 @@ jobs:
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
+      - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
+      - checkout
       - run:
           name: Run migrations
           command: |
             # Your code here
-            exit 1
+            npm i
+            cd backend
+            npm run migrations > migration_output
       - run:
           name: Send migration results to memstash
           command: |
             # Your code here
-            exit 1
+            if grep -c "has been executed successfully" migration_output
+            then
+              curl -H "Content-Type: text/plain" -H "token: qwer" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
+            fi
      # Here's where you will add some code to rollback on failure      
 
   deploy-frontend:
