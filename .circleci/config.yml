@@ -1,6 +1,13 @@
 version: 2.1
 
 commands:
+  aws-configure:
+    description: Configure AWS account for each docker container.
+    steps:
+      - run: aws configure set default.region $AWS_DEFAULT_REGION
+      - run: aws configure set aws_access_key_if $AWS_ACCESS_KEY_ID
+      - run: aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+  
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -145,6 +152,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      # Configure AWS account
+      - aws-configure
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -188,7 +197,7 @@ jobs:
       # Here's where you will add some code to rollback on failure      
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}" 
-          
+
   configure-infrastructure:
     docker:
       # Docker image here that supports Ansible
