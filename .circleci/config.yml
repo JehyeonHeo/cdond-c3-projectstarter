@@ -223,9 +223,9 @@ jobs:
           name: Check workspace path and contents
           command: |
             echo "pwd"
-            pwd
-            echo "inventory.txt"
-            cat inventory.txt
+            pwd                    # The result is /root/project
+            # echo "inventory.txt"
+            # cat inventory.txt -> There isn't /root/project/inventory.txt
             echo "~/inventory.txt"
             cat ~/inventory.txt
 
