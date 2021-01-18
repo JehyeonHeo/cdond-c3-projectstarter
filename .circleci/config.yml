@@ -264,24 +264,43 @@ jobs:
   deploy-frontend:
     docker:
       # Docker image here that supports AWS CLI
+      - image: amazon/aws-cli
     steps:
       # Checkout code from git
+      - checkout
+      - aws-configure
       - run:
           name: Install dependencies
           command: |
             # your code here
+            yum update
+            yum -y install ['nodejs', 'npm']
       - run:
           name: Get backend url
           command: |
             # your code here
-            export API_URL="http://${BACKEND_IP}:3030"
+            curl -H "token: asdfjkl" --request GET https://api.memstash.io/values/udapeople-backend-url > backend_url
+            export API_URL="http://${backend_url}:3030"
             echo "${API_URL}"
+      - run:
+          name: Run build to bake back-end URL
+          command: npm run build
       - run:
           name: Deploy frontend objects
           command: |
             # your code here
+            aws cloudformation deploy \
+              --template-file .circleci/files/frontend.yml \
+              --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
+      - run:
+          command: aws s3 sync ./dist s3://"udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --delete
       # Here's where you will add some code to rollback on failure      
-                   
+      - destroy-environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - revert-migrations:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+
   deploy-backend:
     docker:
       # Docker image here that supports Ansible
