@@ -218,7 +218,17 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["c9:ae:c8:91:98:18:d9:34:ea:0d:f3:87:b9:8c:fd:91"]
       - attach_workspace:
-          at: .
+          at: ~/
+      - run:
+          name: Check workspace path and contents
+          command: |
+            echo "pwd"
+            pwd
+            echo "inventory.txt"
+            cat inventory.txt
+            echo "~/inventory.txt"
+            cat ~/inventory.txt
+
       - run:
           name: Install dependencies
           command: |
@@ -232,7 +242,7 @@ jobs:
           name: Configure server
           command: |
             # Your code here
-            ansible-playbook -i inventory.text .circleci/ansible/configure-server.yml
+            ansible-playbook -i ~/inventory.text .circleci/ansible/configure-server.yml
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"      
