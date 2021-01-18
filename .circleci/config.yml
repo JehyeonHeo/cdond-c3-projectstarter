@@ -198,10 +198,10 @@ jobs:
             aws ec2 describe-instances
             --query 'Reservations[*].Instances[*].PublicIpAddress'
             --filters "Name=tag:project,Values=udapeople"
-            --output text >> project/.circleci/ansible/inventory.txt
+            --output text >> .circleci/ansible/inventory.txt
       - run:
           name: Check the contents of inventory.txt
-          command: cat project/.circleci/ansible/inventory.txt
+          command: cat .circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
@@ -263,8 +263,8 @@ jobs:
       - run:
           name: Install aws-cli
           command: |
-            apt update
-            apt upgrade
+            # apt update
+            # apt upgrade
             apt install curl
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
