@@ -220,16 +220,6 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-          name: Check workspace path and contents
-          command: |
-            echo "pwd"
-            pwd                    # The result is /root/project
-            # echo "inventory.txt"
-            # cat inventory.txt -> There isn't /root/project/inventory.txt
-            echo "~/inventory.txt"
-            cat ~/inventory.txt
-
-      - run:
           name: Install dependencies
           command: |
             # Your code here
@@ -238,6 +228,17 @@ jobs:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             ./aws/install
+      - run:
+          name: Check workspace path and contents
+          command: |
+            echo "pwd"
+            pwd                    # The result is /root/project
+            # echo "inventory.txt"
+            # cat inventory.txt -> There isn't /root/project/inventory.txt
+            #echo "~/inventory.txt"
+            #cat ~/inventory.txt -> ~/ means /root/. And there isn't /root/project/inventory.txt
+            echo "~/project/.circleci/ansible/inventory.txt"
+            cat ~/project/.circleci/ansible/inventory.txt
       - run:
           name: Configure server
           command: |
