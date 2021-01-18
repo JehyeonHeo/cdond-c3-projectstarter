@@ -329,29 +329,50 @@ jobs:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
       - revert-migrations:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-          
+
   smoke-test:
     docker:
-      # Lightweight Docker image 
+      # Lightweight Docker image
+      - image: alpine:latest 
     steps:
       # Checkout code from git
+      - checkout
       - run:
           name: Install dependencies
           command: |
             # your code here
+            apk add --update curl
       - run:
           name: Get backend url
           command: |
             # your code here
+            backend_url = $(curl -H "token: asdfjkl" --request GET https://api.memstash.io/values/udapeople-backend-url)
       - run:
           name: Backend smoke test.
           command: |
             # your code here
+            if curl -s "https://${backend_url}:3000/api/status"
+            then
+              return 0
+            else
+              return 1
+            fi
       - run:
           name: Frontend smoke test.
           command: |
             # your code here
-      # Here's where you will add some code to rollback on failure  
+            URL = "http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-ap-northeast-2.amazonaws.com"
+            if curl -s ${URL} | grep "Welcome"
+            then
+              return 1
+            else
+              return 1
+            fi
+      # Here's where you will add some code to rollback on failure
+      - destroy-environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - revert-migrations:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"  
 
   cloudfront-update:
     docker:
