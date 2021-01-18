@@ -199,6 +199,9 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress'
             --filters "Name=tag:project,Values=udapeople"
             --output text >> project/.circleci/ansible/inventory.txt
+      - run:
+          name: Check the contents of inventory.txt
+          command: cat project/.circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
