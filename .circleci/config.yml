@@ -242,11 +242,13 @@ jobs:
             #cat ~/inventory.txt -> ~/ means /root/. And there isn't /root/project/inventory.txt
             echo "~/project/.circleci/ansible/inventory.txt"
             cat ~/project/.circleci/ansible/inventory.txt
+            echo "ls"
+            ls
       - run:
           name: Configure server
           command: |
             # Your code here
-            ansible-playbook -i ~/inventory.text .circleci/ansible/configure-server.yml
+            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml
       # Here's where you will add some code to rollback on failure
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"      
