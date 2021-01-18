@@ -258,8 +258,8 @@ jobs:
           name: Run migrations
           command: |
             # Your code here
-            npm i
             cd backend
+            npm i
             npm run migrations > migration_output
       - run:
           name: Send migration results to memstash
