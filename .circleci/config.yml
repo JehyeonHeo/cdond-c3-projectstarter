@@ -45,6 +45,7 @@ commands:
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             curl -H "token: qwer" --request GET https://api.memstash.io/values/migration_<< parameters.workflow_id >> > SUCCESS
+            cat SUCCESS
             if grep -q "has been executed successfully." SUCCESS 
             then
               cd ~/project/backend
