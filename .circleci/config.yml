@@ -226,8 +226,10 @@ jobs:
           name: Install dependencies
           command: |
             # Your code here
-            apk add --update ansible
-            apk add --update curl
+            apt-get update
+            apt-get upgrade
+            apk-get install -y ansible
+            apt-get install -y curl
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             ./aws/install
