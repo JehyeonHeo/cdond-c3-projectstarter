@@ -193,12 +193,12 @@ jobs:
             --request PUT --data "$(<backend_url)" https://api.memstash.io/values/udapeople-backend-url
       - run:
           name: Add back-end ip to ansible inventory
-          command: >-
-            # Your code here
-            aws ec2 describe-instances
-            --query 'Reservations[*].Instances[*].PublicIpAddress'
-            --filters "Name=tag:project,Values=udapeople"
-            --output text >> .circleci/ansible/inventory.txt
+          command: |
+            # Your code here 
+            aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --filters "Name=tag:project,Values=udapeople" \
+              --output text >> .circleci/ansible/inventory.txt
       - run:
           name: Check the contents of inventory.txt
           command: cat .circleci/ansible/inventory.txt
