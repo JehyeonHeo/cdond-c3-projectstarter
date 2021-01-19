@@ -348,6 +348,7 @@ jobs:
           command: |
             # your code here
             apk --no-cache update
+            apk add --update less
             apk add --update ansible
             pip3 --no-cache-dir install awscli
       - aws-configure
@@ -374,6 +375,7 @@ jobs:
           command: |
             # your code here
             apk --no-cache update
+            apk add --update less
             apk --no-cache add python3
             pip3 --no-cache-dir install awscli
       - aws-configure
