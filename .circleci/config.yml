@@ -304,7 +304,10 @@ jobs:
           command: |
             # your code here
             yum update
-            yum -y install ['nodejs', 'npm']
+            curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install v9.4.0
       - run:
           name: Get backend url
           command: |
@@ -313,20 +316,12 @@ jobs:
             export API_URL="http://$(<backend_url):3030"
             echo "${API_URL}"
       - run:
-          name: Run build to bake back-end URL
-          command: |
-            cd frontend
-            npm run build
-      - run:
           name: Deploy frontend objects
           command: |
             # your code here
-            aws cloudformation deploy \
-              --template-file .circleci/files/frontend.yml \
-              --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" \
-      - run:
-          command: aws s3 sync frontend/dist s3://"udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --delete
+            cd frontend
+            npm run build
+            aws s3 sync ./dist s3://"udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --delete
       # Here's where you will add some code to rollback on failure      
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
