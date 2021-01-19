@@ -277,6 +277,7 @@ jobs:
             # Your code here
             cd backend
             npm i
+            npm audit fix --audit-level=critical --force
             npm run migrations > migration_output
             echo "Migration output result"
             cat migration_output
