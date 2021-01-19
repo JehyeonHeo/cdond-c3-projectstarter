@@ -277,7 +277,7 @@ jobs:
             cd backend
             npm i
             npm run migrations > migration_output
-            cat "Migration output result"
+            echo "Migration output result"
             cat migration_output
       - run:
           name: Send migration results to memstash
@@ -310,7 +310,7 @@ jobs:
           command: |
             # your code here
             curl -H "token: asdfjkl" --request GET https://api.memstash.io/values/udapeople-backend-url > backend_url
-            export API_URL="http://${backend_url}:3030"
+            export API_URL="http://$(<backend_url):3030"
             echo "${API_URL}"
       - run:
           name: Run build to bake back-end URL
