@@ -26,4 +26,4 @@
 
 - name: "initiate server"
   become: yes
-  shell: pm2 start npm --name backend -- start
+  shell: pm2 start npm --name backend/webpack.config.js -- start
