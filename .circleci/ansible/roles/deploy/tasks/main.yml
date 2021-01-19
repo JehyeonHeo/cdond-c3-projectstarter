@@ -1,5 +1,5 @@
 ---
 - name: copy compiled back-end files to EC2 instance
   copy:
-    src: ./dist
+    src: backend/dist
     dest: dist
