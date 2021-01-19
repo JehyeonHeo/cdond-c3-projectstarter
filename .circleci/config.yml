@@ -277,13 +277,14 @@ jobs:
             cd backend
             npm i
             npm run migrations > migration_output
+            cat "Migration output result"
             cat migration_output
       - run:
           name: Send migration results to memstash
           command: |
             # Your code here
             curl -H "Content-Type: text/plain" -H "token: qwer" \
-              --request PUT --data "${<backend/migration_output}" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
+              --request PUT --data "$(<backend/migration_output)" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
      # Here's where you will add some code to rollback on failure      
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
