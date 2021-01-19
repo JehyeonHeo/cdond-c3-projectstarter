@@ -48,10 +48,13 @@ commands:
             cat SUCCESS
             if grep -q "has been executed successfully." SUCCESS 
             then
+              echo "Revert because of success"
               cd ~/project/backend
               npm install
             #  Add revert code here. You can find this in the Getting Started section.
               npm run migrations:revert
+            else
+              echo "Do nothing"
             fi
             
 jobs:
