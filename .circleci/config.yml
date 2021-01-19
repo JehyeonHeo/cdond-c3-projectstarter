@@ -264,6 +264,7 @@ jobs:
           command: |
             apt-get update
             apt-get upgrade
+            apt-get install -y less
             apt-get install -y curl
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
@@ -276,12 +277,13 @@ jobs:
             cd backend
             npm i
             npm run migrations > migration_output
+            cat migration_output
       - run:
           name: Send migration results to memstash
           command: |
             # Your code here
             curl -H "Content-Type: text/plain" -H "token: qwer" \
-              --request PUT --data "${<migration_output}" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
+              --request PUT --data "${<backend/migration_output}" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
      # Here's where you will add some code to rollback on failure      
       - destroy-environment:
           workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
