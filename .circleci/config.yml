@@ -279,7 +279,7 @@ jobs:
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
-      - image: node:15.5.1-buster
+      - image: node:12.20-buster
     steps:
       # Checkout code from git
       - checkout
