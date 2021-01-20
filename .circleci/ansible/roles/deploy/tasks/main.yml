@@ -3,7 +3,7 @@
   become: yes
   unarchive:
     src: /root/project/backend.tar.gz
-    dest: /root/project
+    dest: .
 
 - name: Stop pm2
   command: |

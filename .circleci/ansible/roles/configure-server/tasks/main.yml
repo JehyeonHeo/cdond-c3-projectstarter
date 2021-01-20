@@ -23,8 +23,8 @@
   become: yes
   unarchive:
     src: /root/project/backend.tar.gz
-    dest: /root/project
+    dest: .
 
 - name: "initiate server"
   become: yes
-  shell: pm2 start npm --name /root/project/backend -- start
+  shell: pm2 start npm --name backend -- start
