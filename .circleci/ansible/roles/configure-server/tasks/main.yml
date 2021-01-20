@@ -20,6 +20,7 @@
     state: present
 
 - name: "Unarchive backend js files"
+  become: yes
   unarchive:
     src: /root/project/backend.tar.gz
     dest: /root/project
