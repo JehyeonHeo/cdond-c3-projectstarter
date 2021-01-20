@@ -1,8 +1,9 @@
 ---
-- name: Copy compiled back-end files to EC2 instance
-  copy:
-    src: backend
-    dest: .
+- name: "Unarchive backend js files"
+  become: yes
+  unarchive:
+    src: /root/project/backend.tar.gz
+    dest: /root/project
 
 - name: Stop pm2
   command: |
@@ -10,6 +11,7 @@
     pm2 delete backend
 
 - name: Build node service
+  become: yes
   command: |
     pwd
     ls
