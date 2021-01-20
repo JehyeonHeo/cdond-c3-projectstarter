@@ -232,6 +232,7 @@ jobs:
             # Your code here
             apk --no-cache update
             apk add --update ansible
+            apk add --update openssh-client
             pip3 --no-cache-dir install awscli
       - aws-configure
       - run:
