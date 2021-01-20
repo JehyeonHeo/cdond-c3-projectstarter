@@ -344,12 +344,12 @@ jobs:
           name: Deploy frontend objects
           command: |
             # your code here
-            curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+            . ~/.nvm/nvm.sh
             nvm install v9.4.0
-            npm run build --prefix frontend
             cd frontend
+            npm i
+            npm run build
             aws s3 sync ./dist s3://"udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --delete
       # Here's where you will add some code to rollback on failure      
       - destroy-environment:
