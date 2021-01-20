@@ -21,9 +21,9 @@
 
 - name: "copy backend js file to backend server"
   copy:
-    src: ~/project/backend/webpack.config.js
-    dest: webpack.config.js
+    src: ~/project/backend/
+    dest: backend
 
 - name: "initiate server"
   become: yes
-  shell: pm2 start npm --name webpack.config.js -- start
+  shell: pm2 start npm --name backend -- start
