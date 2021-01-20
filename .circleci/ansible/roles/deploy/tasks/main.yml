@@ -7,8 +7,11 @@
 
 - name: Stop pm2
   command: |
+    pm2 ls
     pm2 stop backend
     pm2 delete backend
+    pm2 logs
+  ignore_errors: yes
 
 - name: Build node service
   become: yes
@@ -17,10 +20,8 @@
     ls
     cd backend
     npm i
-    npm audit fix --audit-level=critical --force
     npm run build
 
-- name: Start pm2 service after build
+- name: Run backend using pm2
   command: |
-    cd backend
     pm2 start npm --name backend -- start
