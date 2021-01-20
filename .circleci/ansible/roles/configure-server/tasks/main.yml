@@ -19,11 +19,11 @@
     production: yes
     state: present
 
-- name: "copy backend js file to backend server"
-  copy:
-    src: ~/project/backend/
-    dest: backend
+- name: "Unarchive backend js files"
+  unarchive:
+    src: /root/project/backend.tar.gz
+    dest: /root/project
 
 - name: "initiate server"
   become: yes
-  shell: pm2 start npm --name backend -- start
+  shell: pm2 start npm --name /root/project/backend -- start
