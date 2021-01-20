@@ -261,6 +261,10 @@ jobs:
             echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"
             echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"
             echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - "backend/.env"
       - run:
           name: Configure server
           command: |
@@ -279,6 +283,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Install aws-cli
           command: |
