@@ -367,6 +367,7 @@ jobs:
             apk add --update less
             apk add --update curl
             apk add --update ansible
+            apk add --update openssh-client
             pip3 --no-cache-dir install awscli
       - aws-configure
       - run:
