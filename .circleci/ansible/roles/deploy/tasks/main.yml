@@ -1,5 +1,24 @@
 ---
-- name: copy compiled back-end files to EC2 instance
+- name: Copy compiled back-end files to EC2 instance
   copy:
-    src: backend/dist
-    dest: dist
+    src: backend
+    dest: .
+
+- name: Stop pm2
+  command: |
+    pm2 stop backend
+    pm2 delete backend
+
+- name: Build node service
+  command: |
+    pwd
+    ls
+    cd backend
+    npm i
+    npm audit fix --audit-level=critical --force
+    npm run build
+
+- name: Start pm2 service after build
+  command: |
+    cd backend
+    pm2 start npm --name backend -- start
