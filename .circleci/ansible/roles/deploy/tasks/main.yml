@@ -7,10 +7,8 @@
 
 - name: Stop pm2
   command: |
-    pm2 ls
     pm2 stop backend
     pm2 delete backend
-    pm2 logs
   ignore_errors: yes
 
 - name: Build node service

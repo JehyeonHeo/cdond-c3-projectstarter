@@ -422,6 +422,16 @@ jobs:
             echo $(tr -d "\n" < backend_url) > backend_url
             cat backend_url
       - run:
+          name: Backend smoke test.
+          command: |
+            # your code here
+            if curl -s "https://$(cat backend_url):3030/api/status"
+            then
+              return 0
+            else
+              return 1
+            fi
+      - run:
           name: Frontend smoke test.
           command: |
             # your code here
@@ -433,17 +443,6 @@ jobs:
             else
               return 1
             fi
-      - run:
-          name: Backend smoke test.
-          command: |
-            # your code here
-            if curl -s "https://$(cat backend_url):3030/api/status"
-            then
-              return 0
-            else
-              return 1
-            fi
-      
       # Here's where you will add some code to rollback on failure
       #- destroy-environment:
       #    workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
