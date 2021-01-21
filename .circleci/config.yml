@@ -406,6 +406,7 @@ jobs:
             apk add --update less
             apk add --update curl
             apk --no-cache add python3
+            apk --no-cache add py3-pip
             pip3 --no-cache-dir install awscli
       - aws-configure
       - run:
