@@ -413,12 +413,12 @@ jobs:
           name: Get backend url
           command: |
             # your code here
-            backend_url = $(curl -H "token: asdfjkl" --request GET https://api.memstash.io/values/udapeople-backend-url)
+            curl -H "token: asdfjkl" --request GET https://api.memstash.io/values/udapeople-backend-url > backend_url
       - run:
           name: Backend smoke test.
           command: |
             # your code here
-            if curl -s "https://${backend_url}:3000/api/status"
+            if curl -s "https://$(cat backend_url):3030/api/status"
             then
               return 0
             else
