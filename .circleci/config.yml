@@ -414,6 +414,8 @@ jobs:
           command: |
             # your code here
             curl -H "token: asdfjkl" --request GET https://api.memstash.io/values/udapeople-backend-url > backend_url
+            # Remove line breaks if there is in backend_url
+            echo $(tr -d "\n" < backend_url) > backend_url 
       - run:
           name: Backend smoke test.
           command: |
