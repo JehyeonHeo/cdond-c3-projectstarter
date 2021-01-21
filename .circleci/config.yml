@@ -415,7 +415,20 @@ jobs:
             # your code here
             curl -H "token: asdfjkl" --request GET https://api.memstash.io/values/udapeople-backend-url > backend_url
             # Remove line breaks if there is in backend_url
-            echo $(tr -d "\n" < backend_url) > backend_url 
+            echo $(tr -d "\n" < backend_url) > backend_url
+            cat backend_url
+      - run:
+          name: Frontend smoke test.
+          command: |
+            # your code here
+            URL = "http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-ap-northeast-2.amazonaws.com"
+            echo ${URL}
+            if curl -s ${URL} | grep "Welcome"
+            then
+              return 0
+            else
+              return 1
+            fi
       - run:
           name: Backend smoke test.
           command: |
@@ -426,22 +439,12 @@ jobs:
             else
               return 1
             fi
-      - run:
-          name: Frontend smoke test.
-          command: |
-            # your code here
-            URL = "http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-ap-northeast-2.amazonaws.com"
-            if curl -s ${URL} | grep "Welcome"
-            then
-              return 1
-            else
-              return 1
-            fi
+      
       # Here's where you will add some code to rollback on failure
-      - destroy-environment:
-          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
-      - revert-migrations:
-          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"  
+      #- destroy-environment:
+      #    workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      #- revert-migrations:
+      #    workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"  
 
   cloudfront-update:
     docker:
