@@ -365,7 +365,7 @@ jobs:
           fingerprints: ["c9:ae:c8:91:98:18:d9:34:ea:0d:f3:87:b9:8c:fd:91"]
       # attach workspace
       - attach_workspace:
-          at: .
+          at: ~/
       - run:
           name: Install dependencies
           command: |
@@ -381,7 +381,10 @@ jobs:
           name: Deploy backend
           command: |
             # your code here
+            cat ~/backend/.env
+            mv ~/backend/.env backend/.env
             cat backend/.env
+            cat .circleci/ansible/inventory.txt
             tar -czvf backend.tar.gz backend
             cd .circleci/ansible
             export ANSIBLE_HOST_KEY_CHECKING=False
