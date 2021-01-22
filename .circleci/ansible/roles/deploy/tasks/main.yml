@@ -13,9 +13,7 @@
 
 - name: Build node service and run backend using pm2
   become: yes
-  command: |
-    pwd
-    ls
+  shell: |
     cd backend
     npm i
     npm run build
