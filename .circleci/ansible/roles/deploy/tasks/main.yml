@@ -17,5 +17,4 @@
     cd backend
     npm i
     npm run build
-    npm run prestart:prod
     pm2 start npm --name backend -- start
