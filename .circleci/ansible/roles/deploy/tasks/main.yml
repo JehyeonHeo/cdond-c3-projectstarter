@@ -17,4 +17,9 @@
     cd backend
     npm i
     npm run build
+
+- name: Run backend using pm2
+  become: yes
+  shell: |
+    cd backend
     pm2 start npm --name backend -- start
