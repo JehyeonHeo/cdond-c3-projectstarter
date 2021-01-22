@@ -5,11 +5,11 @@
     src: /root/project/backend.tar.gz
     dest: .
 
-- name: Stop pm2
-  command: |
-    pm2 stop backend
-    pm2 delete backend
-  ignore_errors: yes
+#- name: Stop pm2
+#  command: |
+#    pm2 stop backend
+#    pm2 delete backend
+#  ignore_errors: yes
 
 - name: Build node service and run backend using pm2
   become: yes
