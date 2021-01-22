@@ -17,6 +17,7 @@
     cd backend
     npm i
     npm run build
+    npm run migrations
 
 - name: Run backend using pm2
   become: yes
