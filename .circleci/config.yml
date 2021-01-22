@@ -425,7 +425,7 @@ jobs:
           name: Backend smoke test.
           command: |
             # your code here
-            if curl -s "https://$(cat backend_url):3030/api/status"
+            if curl -s "http://$(cat backend_url):3030/api/status"
             then
               return 0
             else
