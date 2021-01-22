@@ -11,7 +11,7 @@
     pm2 delete backend
   ignore_errors: yes
 
-- name: Build node service
+- name: Build node service and run backend using pm2
   become: yes
   command: |
     pwd
@@ -20,7 +20,4 @@
     npm i
     npm run build
     npm run prestart:prod
-
-- name: Run backend using pm2
-  command: |
     pm2 start npm --name backend -- start
