@@ -188,7 +188,7 @@ jobs:
           command: >-
             aws ec2 describe-instances
             --query 'Reservations[*].Instances[*].PublicDnsName'
-            --filters "Name=tag:project,Values=udapeople" "Name=instance.group-name,Values=UdaPeople-${CIRCLE_WORKFLOW_ID:0:7}"
+            --filters "Name=tag:project,Values=udapeople" "Name=instance.group-name,Values=UdaPeople-${CIRCLE_WORKFLOW_ID:0:7}-BasicSG"
             --output text > backend_url  
       - run:
           name: Save backend url to memstash.io
