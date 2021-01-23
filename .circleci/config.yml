@@ -495,6 +495,12 @@ jobs:
       # Checkout code from git
       - checkout
       - aws-configure
+      - run:
+          name: Install dependencies
+          command: |
+            # your code here
+            yum update
+            yum install -y tar gzip
       - attach_workspace:
           at: ~/
       - run:
