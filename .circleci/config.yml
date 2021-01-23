@@ -201,7 +201,7 @@ jobs:
             # Your code here 
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:project,Values=udapeople" "Name=instance.group-name,Values=UdaPeople-${CIRCLE_WORKFLOW_ID:0:7}"\
+              --filters "Name=tag:project,Values=udapeople" "Name=instance.group-name,Values=UdaPeople-${CIRCLE_WORKFLOW_ID:0:7}-BasicSG"\
               --output text >> .circleci/ansible/inventory.txt
       - run:
           name: Check the contents of inventory.txt
