@@ -469,9 +469,10 @@ jobs:
           name: Update cloudfront distribution
           command: |
             # your code here
-            export OldWorkflowID=$(aws cloudformation \
-              list-exports --query "Exports[?Name=='WorkflowID'].Value" \
+            aws cloudformation list-exports \
+              --query "Exports[?Name=='WorkflowID'].Value" \
               --no-paginate --output text) > OldWorkflowID.txt
+            cat OldWorkflowID.txt
             aws cloudformation deploy \
               --template-file .circleci/files/cloudfront.yml \
               --stack-name udapeople-prod \
@@ -514,16 +515,24 @@ jobs:
             echo "${STACKS}"
             for id in "${STACKS[@]}"
             do
-              cat $id
+              echo $id
               if [[ ${id: -7} == "${OldWorkflowID}" ]]
               then
                 # your code here
-                aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-                aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
-                aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
-                echo "Delete old S3 and old stacks"
+                echo $id
+                if [[ "${id:10:5}" == "front" ]]
+                then
+                  aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+                  aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
+                  echo "Delete old S3 and frontend stack"
+                elif [[ "${id:10:4}" == "back" ]]
+                  aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
+                  echo "Delete old backend stack"
+                else
+                  echo "Something wrong happened?"
+                fi 
               else
-                echo "Should not delete newly launched stacks"
+                echo "Should not delete newly launched stacks and other stacks"
               fi
             done
 
