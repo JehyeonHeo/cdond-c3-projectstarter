@@ -513,6 +513,7 @@ jobs:
               --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
             echo "${OldWorkflowID}"
             echo "${STACKS}"
+            # Delete stacks only related with OldWorkflowID.
             for id in "${STACKS[@]}"
             do
               echo $id
