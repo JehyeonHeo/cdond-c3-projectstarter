@@ -338,9 +338,12 @@ jobs:
           command: |
             # your code here
             curl -H "token: asdfjkl" --request GET https://api.memstash.io/values/udapeople-backend-url > backend_url
+            echo $(tr -d "\n" < backend_url) > backend_url
+            cat backend_url
             export API_URL="http://$(<backend_url):3030"
             echo "API_URL=${API_URL}" >> frontend/.env
             echo NODE_ENV=production >> frontend/.env
+            cat frontend/.env
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
             . ~/.nvm/nvm.sh
             nvm install v9.4.0
